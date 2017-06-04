@@ -1,7 +1,11 @@
 # ulyaoth-api
 Ulyaoth API
 
-# How to install
+# Master branch
+The master branch is our development branch and the installation instructions might not work for this branch.
+If you wish to install our api please use a released version.
+
+# How to install release v0.10
 Please see our installation guide on our website: https://www.ulyaoth.net/tutorials/how-to-install-ulyaoth-api-in-aws.html
 
 # Example usage:
