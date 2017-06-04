@@ -1,0 +1,10 @@
+Some ideas of things that still need to be implemented:
+* Fix so cities with spaces work such as "/time/europe/new york".
+* Add a "/country" option and that you can get information for example "/country/sweden/population" would give the pulation of sweden etc etc.
+* make it so the lambda script is more optimized exit when required the faster it runs the cheaper.
+* add the "/weather" option to get weather for countries and cities.
+* better documentation on github.
+* better documentation in api gateway.
+* add main page with api commands when going to domain.
+* add proper error pages if lambda does not show output, api gateway should show 404.
+* create a cloudformation template to set things up automatically.
