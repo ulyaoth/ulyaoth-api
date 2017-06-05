@@ -7,23 +7,35 @@ def lambda_handler(event, context):
     region = event['params']['path']['region']
     zone = event['params']['path']['zone']
     
-    # The choice input is optional so we must verift it exists
+    # The choice input is optional so we must verift it exists and we also set the endpoint url
     if 'choice' in event['params']['path']:
         choice = event['params']['path']['choice']
+        endpoint = "/time/" + region + "/" + zone + "/" + choice
     else:
-        choice = False
+        choice = "false"
+        endpoint = "/time/" + region + "/" + zone 
+    
+    # if there is no choice we show a json with everything
+    if choice == "false":
+        iso8601 = str(datetime.datetime.now(pytz.timezone('%s/%s' % (region.capitalize(), zone.capitalize()))).isoformat())
+        rfc3339 = str(datetime.datetime.now(pytz.timezone('%s/%s' % (region.capitalize(), zone.capitalize()))).isoformat()) + "Z"
+        data = { "meta": { "endpoint": endpoint	}, "data": { "iso8601": iso8601, "rfc3339": rfc3339 }}
 
-    if choice == "iso":
-        # If a person does add /iso/ we will show the time in iso format.
-        iso = str(datetime.datetime.now(pytz.timezone('%s/%s' % (region.capitalize(), zone.capitalize()))).isoformat())
-        return {
-            'iso' : iso
-        }
+        return data
         exit()
-    else:
-        # standard time from for example /time/europe/stockholm
-        t = str(datetime.datetime.now(pytz.timezone('%s/%s' % (region.capitalize(), zone.capitalize()))).time().replace(microsecond=0))
-        return {
-            'time' : t
-        }
+    
+    # Check if the choice is iso8601
+    if choice == "iso8601":
+        iso8601 = str(datetime.datetime.now(pytz.timezone('%s/%s' % (region.capitalize(), zone.capitalize()))).isoformat())
+        data = { "meta": { "endpoint": endpoint	}, "data": { "iso8601": iso8601 }}
+
+        return data
+        exit()
+
+    # Check if the choice is rfc3339
+    if choice == "rfc3339":
+        rfc3339 = str(datetime.datetime.now(pytz.timezone('%s/%s' % (region.capitalize(), zone.capitalize()))).isoformat()) + "Z"
+        data = { "meta": { "endpoint": endpoint	}, "data": { "rfc3339": rfc3339 }}
+
+        return data
         exit()
