@@ -29,8 +29,8 @@ def lambda_handler(event, context):
 
 	# if there is no first choice we show a json with everything
 	if firstchoice == "false":
-		iso8601 = str(datetime.datetime.now(pytz.timezone('%s/%s' % (region.capitalize(), zone.capitalize()))).isoformat())
-		rfc3339 = str(datetime.datetime.now(pytz.timezone('%s/%s' % (region.capitalize(), zone.capitalize()))).isoformat()) + "Z"
+		iso8601 = str(datetime.datetime.now(pytz.timezone('%s/%s' % (region.capitalize(), zone.capitalize()))).replace(microsecond=0).isoformat())
+		rfc3339 = str(datetime.datetime.now(pytz.timezone('%s/%s' % (region.capitalize(), zone.capitalize()))).replace(microsecond=0).isoformat())
 		t = datetime.datetime.now(pytz.timezone('%s/%s' % (region.capitalize(), zone.capitalize()))).time().replace(microsecond=0)
 		hour12 = str(t.strftime("%I:%M %p"))
 		hour24 = str(datetime.datetime.now(pytz.timezone('%s/%s' % (region.capitalize(), zone.capitalize()))).time().replace(microsecond=0))
@@ -39,13 +39,13 @@ def lambda_handler(event, context):
 		exit()  
 	# Check if the first choice is to show iso8601 time format
 	elif firstchoice == "iso8601":
-		iso8601 = str(datetime.datetime.now(pytz.timezone('%s/%s' % (region.capitalize(), zone.capitalize()))).isoformat())
+		iso8601 = str(datetime.datetime.now(pytz.timezone('%s/%s' % (region.capitalize(), zone.capitalize()))).replace(microsecond=0).isoformat())
 		data = { "meta": { "endpoint": endpoint, "timezone": regionzone }, "data": { "iso8601": iso8601 }}
 		return data
 		exit()
 	# Check if the first choice is to show rfc3339 time format
 	elif firstchoice == "rfc3339":
-		rfc3339 = str(datetime.datetime.now(pytz.timezone('%s/%s' % (region.capitalize(), zone.capitalize()))).isoformat()) + "Z"
+		rfc3339 = str(datetime.datetime.now(pytz.timezone('%s/%s' % (region.capitalize(), zone.capitalize()))).replace(microsecond=0).isoformat())
 		data = { "meta": { "endpoint": endpoint, "timezone": regionzone }, "data": { "rfc3339": rfc3339 }}
 		return data
 		exit()
